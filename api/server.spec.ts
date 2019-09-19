@@ -17,12 +17,12 @@ describe('messages model', () => {
   });
 
   it('should return 200 OK', async () => {
-    const res = await request(server).get('/');
+    const res = await request(server).get('/api/messages');
     expect(res.status).toBe(200);
   });
 
-  it('should return array', async () => {
-    const res = await request(server).get('/');
-    expect(res.body).toEqual([]);
+  it('should return JSON', async () => {
+    const res = await request(server).get('/api/messages');
+    expect(res.type).toMatch(/json/i);
   });
 });
