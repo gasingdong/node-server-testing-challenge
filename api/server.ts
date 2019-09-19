@@ -23,8 +23,19 @@ server.post('/api/messages', async (req, res, next) => {
   }
 });
 
-server.delete('/api/messages/:id', (req, res) => {
-  res.status(200).json({ message: 'ok' });
+server.delete('/api/messages/:id', async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const message = await Messages.findById(Number(id));
+    if (message) {
+      await Messages.del(Number(id));
+      res.status(200).json(message);
+    } else {
+      res.status(404).json({ message: 'does not exist' });
+    }
+  } catch (err) {
+    next(err);
+  }
 });
 
 export default server;

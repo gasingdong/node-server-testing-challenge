@@ -50,7 +50,7 @@ describe('server.js', () => {
     it('should delete message', async () => {
       await db('messages').insert({ message: 'Hello world!' });
       await request(server).delete('/api/messages/1');
-      const size = await db('messages');
+      const size = (await db('messages')).length;
       expect(size).toBe(0);
     });
 
