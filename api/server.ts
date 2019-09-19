@@ -14,7 +14,14 @@ server.get('/api/messages', async (req, res, next) => {
   }
 });
 
-server.post('/api/messages', (req, res) => {});
+server.post('/api/messages', async (req, res, next) => {
+  try {
+    const saved = await Messages.add(req.body);
+    res.status(200).json(saved);
+  } catch (err) {
+    next(err);
+  }
+});
 
 server.delete('/api/messages', (req, res) => {});
 
