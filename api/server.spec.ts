@@ -45,4 +45,18 @@ describe('server.js', () => {
       expect(id).toBe(1);
     });
   });
+
+  describe('POST AND DELETE MESSAGES', () => {
+    it('should delete message', async () => {
+      await db('messages').insert({ message: 'Hello world!' });
+      await request(server).delete('/api/messages/1');
+      const size = await db('messages');
+      expect(size).toBe(0);
+    });
+
+    it('should error 404 when deleting non-existent', async () => {
+      const res = await request(server).delete('/api/messages/2');
+      expect(res.status).toEqual(404);
+    });
+  });
 });

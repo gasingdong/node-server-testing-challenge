@@ -23,6 +23,8 @@ server.post('/api/messages', async (req, res, next) => {
   }
 });
 
-server.delete('/api/messages', (req, res) => {});
+server.delete('/api/messages/:id', (req, res) => {
+  res.status(200).json({ message: 'ok' });
+});
 
 export default server;
